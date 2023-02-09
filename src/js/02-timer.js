@@ -2,11 +2,11 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 const input = document.getElementById("datetime-picker")
 const button = document.querySelector("[data-start]")
-const days = document.querySelector("[data-days]")
-const hours = document.querySelector("[data-hours]")
-const minutes = document.querySelector("[data-minutes]")
-const seconds = document.querySelector("[data-seconds]")
-const diffTime = 0
+const daysTimer = document.querySelector("[data-days]")
+const hoursTimer = document.querySelector("[data-hours]")
+const minutesTimer = document.querySelector("[data-minutes]")
+const secondsTimer = document.querySelector("[data-seconds]")
+let diffTime = 0
 // const selectedDatesUser 
 button.disabled = true
 const options = {
@@ -25,12 +25,36 @@ const options = {
       }
       button.addEventListener("click", onDiffTime)
       function onDiffTime() {
-          console.log(selectedDates[0].getTime())
-          console.log(date.getTime() )
-        // diffTime =  selectedDates[0].getTime() - date.getTime() 
-       }
+          diffTime = selectedDates[0].getTime() - date.getTime() 
+          console.log(date)
+          const {days, hours, minutes, seconds } = convertMs(diffTime)   
+          daysTimer.textContent = days
+          hoursTimer.textContent = hours
+          minutesTimer.textContent = minutes
+          secondsTimer.textContent = seconds
+      }
+    //   setInterval(onDiffTime, 100)
     }
 };
 flatpickr(input, options)
-console.log(diffTime)
 
+function convertMs(ms) {
+  // Number of milliseconds per unit of time
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  // Remaining days
+  const days = Math.floor(ms / day);
+  // Remaining hours
+  const hours = Math.floor((ms % day) / hour);
+  // Remaining minutes
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  // Remaining seconds
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+    return { days, hours, minutes, seconds };   
+}
+
+// 
