@@ -13,10 +13,10 @@ function startCrPr (e)  {
     Number(amount.value)
   );
   function getData(delay, step, amount) {
-    for (let position = 1; position <= amount; position + 1) {
+    for (let position = 1; position <= amount; position += 1) {
       createPromise(position, delay)
         .then(({ position, delay }) => {
-          Notiflix.Notify.success(
+         Notiflix.Notify.success(
             `✅ Fulfilled promise ${position} in ${delay}ms`,
              {
               timeout: 2000,
@@ -24,7 +24,7 @@ function startCrPr (e)  {
           )
         })
         .catch(({ position, delay }) => {
-          Notiflix.Notify.failure(
+         Notiflix.Notify.failure(
             `❌ Rejected promise ${position} in ${delay}ms`,
              {
               timeout: 2000,
