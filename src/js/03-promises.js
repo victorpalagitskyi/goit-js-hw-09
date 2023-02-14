@@ -1,4 +1,4 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import Notiflix from 'notiflix';
 const form = document.querySelector(".form")
 const delay = document.querySelector('[name="delay"]')
 const step = document.querySelector('[name="step"]')
@@ -16,10 +16,10 @@ function startCrPr (e)  {
     for (let position = 1; position <= amount; position += 1) {
       createPromise(position, delay)
         .then(({ position, delay }) => {
-         Notiflix.Notify.success(
+          Notiflix.Notify.success(
             `✅ Fulfilled promise ${position} in ${delay}ms`,
              {
-              timeout: 2000,
+              // timeout: 2000,
             }
           )
         })
@@ -27,11 +27,12 @@ function startCrPr (e)  {
          Notiflix.Notify.failure(
             `❌ Rejected promise ${position} in ${delay}ms`,
              {
-              timeout: 2000,
+              // timeout: 2000,
             }
           )
         })
-      delay += step;
+      delay += step
+      
     }
   }
   }
@@ -46,6 +47,6 @@ function createPromise(position, delay) {
       else {
         reject("Error")
       }
-    }, 2000)
+    }, delay )
   })
 }
